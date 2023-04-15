@@ -14,15 +14,24 @@ jobs:
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
-      #- run:
-       #   name: "Install Metalib"
-        #  command: |
-         #   git clone https://github.com/plclub/metalib.git
-          #  cd metalib/Metalib
-           # make install
+      - restore-cache:
+          keys:
+            - cabal-{{checksum “lngen.cabal”}}-{{checksum “cabal.project.freeze”}}
       - run:
-          name: "Build and install lngen"
-          command: stack build 
+          name: "Build dependencies"
+          command: |
+            cabal update
+            cabal build --dependencies-only
+      - save-cache:
+          keys:
+            - cabal-{{checksum “lngen.cabal”}}-{{checksum “cabal.project.freeze”}}
+          paths:
+            - paths: "~/.cabal/store"
+      - run:
+          name: "Build lngen"
+          command: |
+            cabal build
+            
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
