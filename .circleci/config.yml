@@ -22,7 +22,7 @@ jobs:
            # make install
       - run:
           name: "Build and install lngen"
-          command: cabal new-build
+          command: stack build 
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
