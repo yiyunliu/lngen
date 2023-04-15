@@ -16,14 +16,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - cabal-{{checksum “lngen.cabal”}}-{{checksum “cabal.project.freeze”}}
+            - cabal-{{ checksum “lngen.cabal” }}-{{ checksum “cabal.project.freeze” }}
       - run:
           name: "Build dependencies"
           command: |
             cabal update
             cabal build --dependencies-only
       - save_cache:
-          key: cabal-{{checksum “lngen.cabal”}}-{{checksum “cabal.project.freeze”}}
+          key: cabal-{{ checksum “lngen.cabal” }}-{{ checksum “cabal.project.freeze” }}
           paths:
             - "~/.cabal/store"
       - run:
