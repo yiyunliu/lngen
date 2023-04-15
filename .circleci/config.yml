@@ -9,7 +9,7 @@ jobs:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
-      - image: haskell:9.2
+      - image: cimg/base
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
@@ -17,11 +17,11 @@ jobs:
       - restore_cache:
           keys:
             - v1-cabal-{{checksum "lngen.cabal"}}-{{checksum "cabal.project.freeze"}}
-      - run:
-          name: "Build dependencies"
-          command: |
-            cabal update
-            cabal build --dependencies-only
+#      - run:
+#          name: "Build dependencies"
+#          command: |
+#            cabal update
+#            cabal build --dependencies-only
       - save_cache:
           key: v1-cabal-{{checksum "lngen.cabal"}}-{{checksum "cabal.project.freeze"}}
           paths:
@@ -29,7 +29,8 @@ jobs:
       - run:
           name: "Build lngen"
           command: |
-            cabal build
+            echo "hello" 
+#            cabal build
             
 
 # Orchestrate jobs using workflows
